@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:io';
 
 void main()
 {
@@ -34,8 +35,6 @@ class MainScreen extends StatefulWidget
 
 class _MainScreenState extends State<MainScreen>
 {
-  Timer _timer;
-
   bool _running = true;
   String _countdownText = "";
   int _countdown = 0;
@@ -48,10 +47,17 @@ class _MainScreenState extends State<MainScreen>
     {
       setState(() {
         _running = false;
-        _countdown = 5;
-        _updateCountdownText();
-        _startTimer();
+        print('Set running completed');
       });
+      sleep(const Duration(seconds:3));
+      print('Done sleeping');
+      /*for(_countdown = 5; _countdown > 0; _countdown--)
+      {
+        sleep(const Duration(seconds: 1));
+        setState(() {
+          _updateCountdownText(_countdown);
+        });
+      }*/
     }
     // Turn the car back on if the delay countdown is not running
     else if(_countdown==0)
@@ -62,39 +68,18 @@ class _MainScreenState extends State<MainScreen>
     }
   }
 
-  //Set a timer for one second to call _timerFinish()
-  void _startTimer()
-  {
-    _timer = new Timer(const Duration(milliseconds: 1000), _timerFinish);
-  }
-
-  /*Decrease the countdown time. If there's still time left, restart the
-    timer. Then update the display.
-   */
-  void _timerFinish()
-  {
-    _countdown--;
-    if(_countdown != 0)
-    {
-      _startTimer();
-    }
-    setState((){
-      _updateCountdownText();
-    });
-  }
-
   /*Set the text that displays how many seconds left in the countdown.
     If the countdown isn't going, hide the text.
   */
-  void _updateCountdownText()
+  void _updateCountdownText(int seconds)
   {
-    if(_countdown == 0)
+    if(seconds == 0)
     {
       _countdownText = "";
     }
     else
     {
-      _countdownText = "You can restart in " + '$_countdown' + " seconds";
+      _countdownText = "You can restart in " + '$seconds' + " seconds";
     }
   }
   
@@ -112,7 +97,8 @@ class _MainScreenState extends State<MainScreen>
               new RaisedButton(onPressed: _toggleRun,
               child: new Text('Toggle')),
               new Text('$_countdownText',
-              style: Theme.of(context).textTheme.display1),
+              style: new TextStyle(
+                fontSize: 14.0)),
             ],
           ),
         ),
