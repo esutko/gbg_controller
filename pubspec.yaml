@@ -5,7 +5,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_blue: "^0.2.2"
-
+  cipher: "^0.7.1"
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
