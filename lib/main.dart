@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
-void main()
-{
+void main() {
   runApp(new GoApp(title: 'GoBabyGo'));
 }
 
-class GoApp extends StatelessWidget
-{
+class GoApp extends StatelessWidget {
   GoApp({this.title});
 
   final String title;
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return new MaterialApp(
       title: "GoBabyGo",
       home: new MainScreen(title: 'GoBabyGo Main Screen'),
@@ -23,8 +20,7 @@ class GoApp extends StatelessWidget
   }
 }
 
-class MainScreen extends StatefulWidget
-{
+class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -33,35 +29,23 @@ class MainScreen extends StatefulWidget
   _MainScreenState createState() => new _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>
-{
+class _MainScreenState extends State<MainScreen> {
   bool _running = true;
   String _countdownText = "";
   int _countdown = 0;
 
-  void _toggleRun()
-  {
+  void _toggleRun() {
     /*If the car is running, turn it off and start the timers for turning it
       back on */
-    if(_running)
-    {
-      setState(() {
-        _running = false;
-        print('Set running completed');
-      });
-      sleep(const Duration(seconds:3));
-      print('Done sleeping');
-      /*for(_countdown = 5; _countdown > 0; _countdown--)
-      {
-        sleep(const Duration(seconds: 1));
+    if(_running) {
+      for(_countdown = 5; _countdown > 0; _countdown--) {
+        pause(const Duration(seconds: 1));
         setState(() {
           _updateCountdownText(_countdown);
         });
-      }*/
-    }
-    // Turn the car back on if the delay countdown is not running
-    else if(_countdown==0)
-    {
+      }
+    } else if(_countdown==0) {
+      // Turn the car back on if the delay countdown is not running
       setState(() {
         _running = true;
       });
@@ -71,21 +55,17 @@ class _MainScreenState extends State<MainScreen>
   /*Set the text that displays how many seconds left in the countdown.
     If the countdown isn't going, hide the text.
   */
-  void _updateCountdownText(int seconds)
-  {
+  void _updateCountdownText(int seconds) {
     if(seconds == 0)
     {
       _countdownText = "";
-    }
-    else
-    {
+    } else {
       _countdownText = "You can restart in " + '$seconds' + " seconds";
     }
   }
   
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(title: new Text(widget.title),),
         body: new Center(
