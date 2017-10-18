@@ -1,0 +1,5 @@
+name: gbg_controller
+description: A new Flutter project.
+
+dependencies:
+  pointycastle: "^0.10.0+5"

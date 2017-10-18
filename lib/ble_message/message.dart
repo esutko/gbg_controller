@@ -1,4 +1,4 @@
 class message {
 	var id = Identifcation();
-	var payload = new Payload();
+	var payload = new Payload("user.json");
 }
