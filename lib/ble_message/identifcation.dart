@@ -24,14 +24,17 @@ class Identifcation {
 	set dob(String str) { _dob = str;}
 	set secret(String str) { _secret = str; }
 
+	//a constructor that returns the current instance of Identifcation
 	factory Identifcation() {
 		return _singleton;
 	}
 
+	//returns a formated string that will be used as a key to generate the cipher text
 	String toString() {
 		return "${_first_name}${_middle}${_last_name}(${_dob})(${_secret})(${new DateTime.now().toString().split(".")[0]})";
 	}
 
+	//returns the sha256 hash of the formated string
 	String hash() {
 		String id = toString();
 		var hash = new Crypt.sha256(id);
@@ -39,15 +42,4 @@ class Identifcation {
 	}
 
 	Identifcation._internal();
-}
-
-void main() {
-	var id = new Identifcation();
-	id.first_name = "Ellis";
-	id.middle = "W";
-	id.last_name = "Sutko";
-	id.dob = "02/14/2001";
-	id.secret = "bread123";
-	print(id);
-	print(id.hash());
 }
