@@ -7,7 +7,7 @@ String sha256(String text) {
 }
 
 String aes(String text, String key) {
-
+	
 }
 
 String xor(String text, String key) {
