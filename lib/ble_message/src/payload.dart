@@ -10,10 +10,6 @@ class Payload extends Object with JSON {
 	set turn(int i) => _content[turn] = i;
 	set kill(bool b) => _content[kill] = b;
 
-	Payload() {
-
-	}
-
 	//returns the content XOR ciphered with the key
 	String cipher(String key) {
 		return xor(_content, key);
