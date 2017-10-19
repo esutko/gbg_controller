@@ -1,0 +1,6 @@
+name: gbg_controller
+description: A new Flutter project.
+
+dependencies:
+  binary: "^0.1.3"
+  crypt: "^1.0.4"
