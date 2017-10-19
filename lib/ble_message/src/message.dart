@@ -2,17 +2,16 @@ library ble_message;
 import 'identifcation.dart';
 import 'payload.dart';
 import 'crypto.dart';
-import 'dart:math';
-import 'dart:io';
+
 
 class Message extends Object with Bluetooth {
 	var id = new Identifcation();
-	var payload;
+	var _payload;
 
-	set content(str) => payload.content = str;
+	get payload(str) => _payload;
 
-	Message([String content]) {
-		payload = new Payload(content);
+	Message(var payload) {
+		_payload = payload;
 	}
 
 	String toString() {
