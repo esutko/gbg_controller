@@ -24,10 +24,11 @@ class _StopButtonState extends State<StopButton> {
 
   void _pressed() {
     print('test1');
-     
+    var connection = flutterBlue.connect(device).listen((s) {});
   }
 
-  Widget build(BuildContext context) {
+/// Disconnect from device
+deviceConnection.cancel();
     return new RaisedButton(
       child: new Text(_buttonText),
       color: const Color.fromARGB(255, 255, 0, 0),
