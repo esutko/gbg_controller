@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'stop_button.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 void main() {
   runApp(new GoApp(title: 'GoBabyGo'));
