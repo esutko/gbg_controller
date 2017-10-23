@@ -8,47 +8,60 @@ void main() {
 }
 
 class GoApp extends StatelessWidget {
-  GoApp({this.title});
+  GoApp({this.title}) {
+    controlPage = new MainScreen(title: 'Controller', app: this);
+  }
 
+  MainScreen controlPage;
   final String title;
 
-  void test()
+  void toggleStop()
   {
-    print('test2');
+    controlPage.toggleStop(); 
   }
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "GoBabyGo",
-      home: new MainScreen(title: 'GoBabyGo Main Screen', app: this),
+      home: controlPage,
     );
   }
 }
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key key, this.title, this.app}) : super(key: key);
+  MainScreen({Key key, this.title, this.app}) : super(key: key) {
+    _state = new _MainScreenState(app);
+  } 
 
+  _MainScreenState _state;
   final String title;
   GoApp app;
 
   @override
-  _MainScreenState createState() => new _MainScreenState(app);
+  _MainScreenState createState() => _state;
+
+  void toggleStop() {
+    _state.toggleStop();
+  }
 }
 
 class _MainScreenState extends State<MainScreen> {
-  _MainScreenState(this.app);
 
-  StopButton stopButton = new StopButton();
+  int _countdown = 0;
+  StopButton stopButton;
 
   Timer timer;
   bool _running = true;
   String _countdownText = "";
-  int _countdown = 0;
 
   GoApp app;
 
-  void _toggleRun() {
+  _MainScreenState(GoApp app) {
+    stopButton = new StopButton(app);
+  }
+  
+  void toggleStop() {
     /*If the car is running, turn it off and start the timers for turning it
       back on */
     if(_running) {
@@ -77,7 +90,7 @@ class _MainScreenState extends State<MainScreen> {
       _startTimer();
     }
     setState(() {
-      _updateCountdownText("You can start the car in " + $_countdown + " seconds");
+      _updateCountdownText("You can start the car in " + _countdown.toString() + " seconds");
     });
   }
 

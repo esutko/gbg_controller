@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'main.dart';
 
 class StopButton extends StatefulWidget {
+  StopButton(GoApp app) {
+    this.app = app;
+    _state = new _StopButtonState(app);
+  }
 
-  _StopButtonState _state = new _StopButtonState();
+  _StopButtonState _state;
+  GoApp app;
 
   @override
   _StopButtonState createState() => _state; 
@@ -14,7 +20,9 @@ class StopButton extends StatefulWidget {
 }
 
 class _StopButtonState extends State<StopButton> {
+  _StopButtonState(this.app);
 
+  GoApp app;
   String _buttonText = "Toggle";
 
   void setText(String text) {
@@ -25,8 +33,9 @@ class _StopButtonState extends State<StopButton> {
 
   void _pressed() {
     print('test1');
-    var connection = flutterBlue.connect(device).listen((s) {});
-    deviceConnection.cancel();
+    app.toggleStop();
+    //var connection = flutterBlue.connect(device).listen((s) {});
+    //deviceConnection.cancel();
   }
 
   Widget build(BuildContext context) {
