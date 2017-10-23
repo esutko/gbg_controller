@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
+import 'stop_button.dart';
 
 void main() {
   runApp(new GoApp(title: 'GoBabyGo'));
@@ -11,29 +12,41 @@ class GoApp extends StatelessWidget {
 
   final String title;
 
+  void test()
+  {
+    print('test2');
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "GoBabyGo",
-      home: new MainScreen(title: 'GoBabyGo Main Screen'),
+      home: new MainScreen(title: 'GoBabyGo Main Screen', app: this),
     );
   }
 }
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key key, this.title}) : super(key: key);
+  MainScreen({Key key, this.title, this.app}) : super(key: key);
 
   final String title;
+  GoApp app;
 
   @override
-  _MainScreenState createState() => new _MainScreenState();
+  _MainScreenState createState() => new _MainScreenState(app);
 }
 
 class _MainScreenState extends State<MainScreen> {
+  _MainScreenState(this.app);
+
+  StopButton stopButton = new StopButton();
+
   Timer timer;
   bool _running = true;
   String _countdownText = "";
   int _countdown = 0;
+
+  GoApp app;
 
   void _toggleRun() {
     /*If the car is running, turn it off and start the timers for turning it
@@ -42,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {
         _running = false;
         _countdown = 5;
-        _updateCountdownText();
+        _updateCountdownText("test");
       });
       _startTimer();  
     }
@@ -64,19 +77,17 @@ class _MainScreenState extends State<MainScreen> {
       _startTimer();
     }
     setState(() {
-      _updateCountdownText();
+      _updateCountdownText("You can start the car in " + $_countdown + " seconds");
     });
   }
 
   /*Set the text that displays how many seconds left in the countdown.
     If the countdown isn't going, hide the text.
   */
-  void _updateCountdownText() {
-    if(_countdown == 0) {
-      _countdownText = "";
-    } else {
-      _countdownText = "You can restart in " + '$_countdown' + " seconds";
-    }
+  void _updateCountdownText(String text) {
+    setState(() {
+      _countdownText = text;
+    });
   }
   
   @override
@@ -92,10 +103,7 @@ class _MainScreenState extends State<MainScreen> {
               new Expanded(
                 child: new FittedBox(
                   fit:BoxFit.fitWidth,
-                  child: new RaisedButton(onPressed: _toggleRun,
-                    child: new Text('Toggle'),
-                    color: const Color.fromARGB(255, 255, 0, 0)
-                  ),
+                  child: stopButton,
                 ),
               ),
               new Text('$_countdownText',
@@ -106,13 +114,4 @@ class _MainScreenState extends State<MainScreen> {
         ),
     );
   }
-}
-
-class KillButton extends StatefulWidget {
-  @override
-  _KillButtonState createState() => new _KillButtonState(); 
-}
-
-class _KillButtonState extends State<KillButton> {
-      
 }
