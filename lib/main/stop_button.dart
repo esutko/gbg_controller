@@ -25,6 +25,7 @@ class _StopButtonState extends State<StopButton> {
 
   void _pressed() {
     print('test1');
+    var device = new BluetoothDevice("");
     var connection = flutterBlue.connect(device).listen((s) {});
     deviceConnection.cancel();
   }
