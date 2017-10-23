@@ -16,16 +16,14 @@ class Identifcation extends Object with JSON {
 	String _salt = "";
 
 	//create accsessor functions
-	String get first_name => _first_name;
-	String get middle => _middle;
-	String get last_name => _last_name;
-	String get dob => _dob;
-	String get salt => _salt;
 	set first_name(String str) =>  _first_name = str.toLowerCase();
 	set middle(String str) => _middle = str.toLowerCase();
 	set last_name(String str) => _last_name = str.toLowerCase();
-	set dob(String str) => _dob = str;
 	set salt(String str) => _salt = str;
+
+	void dob(int month, int day, int year) {
+		_dob = "$month/$day/$year";
+	}
 
 	//a constructor that returns the current instance of Identifcation
 	factory Identifcation() {
