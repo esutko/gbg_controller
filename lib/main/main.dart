@@ -10,15 +10,41 @@ void main() {
 
 class GoApp extends StatelessWidget {
   GoApp({this.title}) {
-    controlPage = new MainScreen(title: 'Controller', app: this);
+    controlPage = new ControlPage(title: 'Controller', mainapp: this);
   }
 
-  MainScreen controlPage;
+  ControlPage controlPage;
   final String title;
+
+  Timer timer;
+
+  bool running = false;
+  int countdown = 0;
 
   void toggleStop()
   {
-    controlPage.toggleStop(); 
+    if(running) {
+      running = false;
+      countdown = 5;
+      controlPage.updateState();
+      _startTimer();
+    }
+    else if(countdown == 0) {
+      running = true;
+      controlPage.updateState();
+    }
+  }
+
+  void _startTimer() {
+    timer = new Timer(const Duration(seconds:1), _timerFinish);
+  }
+
+  void _timerFinish() {
+    countdown--;
+    if(countdown > 0) {
+      _startTimer();
+    }
+    controlPage.updateState();
   }
 
   @override
