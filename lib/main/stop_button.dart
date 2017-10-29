@@ -33,7 +33,7 @@ class _StopButtonState extends State<StopButton> {
     print("About to scan");
     scanSubscription = flutterBlue.scan().listen((scanResult) {
       print("Test: ");
-      print(scanResult.toString());
+      print(scanResult.device.id.id);
     });
     //start();
     /// Disconnect from device
