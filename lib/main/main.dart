@@ -14,13 +14,15 @@ class GoApp extends StatelessWidget {
   }
 
   ControlPage controlPage;
+
   final String title;
 
+  //Variables for executing the delay before the user can restart the car.
   Timer timer;
-
   bool running = false;
   int countdown = 0;
 
+  /*Called when the toggle button is pressed. If the car is running, disable it. If the car is not running and the countdown has ended, restart the car. */
   void toggleStop()
   {
     if(running) {
@@ -47,6 +49,9 @@ class GoApp extends StatelessWidget {
     controlPage.updateState();
   }
 
+  void test(String s) {
+    controlPage.setText(s);
+  }
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -55,5 +60,3 @@ class GoApp extends StatelessWidget {
     );
   }
 }
-
-
