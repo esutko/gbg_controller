@@ -17,54 +17,21 @@ class StopButton extends StatefulWidget {
 }
 
 class _StopButtonState extends State<StopButton> {
-  var scanSubscription;
-  var connection;
-  Timer timer;
   void _pressed() {
-    //widget.app.toggleStop();
     //DeviceIdentifier id = new DeviceIdentifier("30:AE:A4:38:7B:6A");
-    DeviceIdentifier id = new DeviceIdentifier("E0:AC:CB:5D:B7:E4");
-    var device = new BluetoothDevice(id: id);
-    //device.discoverServices();
-    //print(device.services);
-    FlutterBlue flutterBlue = FlutterBlue.instance;
-    //var deviceConnection = flutterBlue.connect(device).listen(print);
-
-    print("About to scan");
-    scanSubscription = flutterBlue.scan().listen((scanResult) {
-      print("Test: ");
-      print(scanResult.device.id.id);
-    });
-    //start();
-    /// Disconnect from device
-    //deviceConnection.cancel();
-    //var connection = flutterBlue.connect(device); 
-    connection = flutterBlue.connect(device).listen((s) {
-      print('Hi'); 
-      //widget.app.test(s.toString());
-    });
-    start();
-    //connection.cancel();
-    //0868adf55d41b39630cf8c11d98ad7e6fa46e0f5
-    
-  }
-
-  void start()
-  {
-    timer = new Timer(const Duration(seconds:30), finish);
-  }
-
-  void finish()
-  {
-    connection.cancel();
-    scanSubscription.cancel();
+    widget.app.toggle();
   }
 
   Widget build(BuildContext context) {
-    return new RaisedButton(
-      child: new Text('Toggle'),
-      color: const Color.fromARGB(255, 255, 0, 0),
-      onPressed: _pressed,
+    return new MaterialButton(
+        child: new Text('Toggle',
+          style: new TextStyle(fontSize: 30.0)),
+        color: const Color.fromARGB(255, 255, 0, 0),
+        onPressed: _pressed,
+        minWidth: 230.0,
+        height: 100.0,
+        elevation: 4.0,
+        highlightElevation: 4.0,
     );
   }
 }

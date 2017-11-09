@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'stop_button.dart';
+import 'page_select.dart';
 import 'dart:async'; 
+import 'package:flutter/services.dart';
 
 class ControlPage extends StatefulWidget {
-  ControlPage({Key key, this.title, GoApp mainapp}) : super(key: key) {
+  ControlPage({Key key, GoApp mainapp}) : super(key: key) {
     app = mainapp;
     _state = new _ControlPageState(mainapp);
   } 
 
   _ControlPageState _state;
-  final String title;
   GoApp app;
+
+  void conn() {
+    _state.bluetoothConnection();
+  }
 
   void updateState() {
     _state.updateState();
@@ -38,12 +43,11 @@ class _ControlPageState extends State<ControlPage> {
   String _countdownText = "";
   bool _running;
   int _countdown = 0;
-  String _text = "TEXTs";
 
   _ControlPageState(GoApp app) {
     stopButton = new StopButton(app);
   }
-   
+
   /*Updates this class' content variables to match the ones from
     Go App.
   */
@@ -55,11 +59,6 @@ class _ControlPageState extends State<ControlPage> {
     });
   }
 
-  void setText(String s) {
-    setState(() {
-      _text = s;
-    });
-  }
   /*Returns the string the page should display that tells the
     user how long until the car can be restarted. When the
     countdown is not running, it returns an empty string so
@@ -72,31 +71,29 @@ class _ControlPageState extends State<ControlPage> {
       return ("You can restart the car in " + widget.app.countdown.toString() + " seconds");
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(title: new Text(widget.title),),
-        body: new Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget> [
-              new Text(_running.toString(),
-              style: Theme.of(context).textTheme.display1),
-              new Expanded(
-                child: new FittedBox(
-                  fit:BoxFit.fitWidth,
-                  child: stopButton,
-                ),
-              ),
-              new Text(_text.toString(),
-                style: new TextStyle(fontSize: 14.0)),
-              new Text(_countdownText.toString(),
-              style: new TextStyle(
-                fontSize: 14.0)),
-            ],
-          ),
-        ),
+    return new Center(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget> [
+          new Text(_running.toString(),
+          style: Theme.of(context).textTheme.display1),
+          new Padding(padding: new EdgeInsets.all(20.0),
+            child: new RaisedButton(child: new Text("Scan"),
+              onPressed: widget.app.scanBt),),
+          new Padding(padding: new EdgeInsets.all(20.0),
+            child: new RaisedButton(child: new Text("Connect"), 
+              onPressed: widget.app.connect),),
+          new Padding(padding: new EdgeInsets.all(20.0),
+            child: stopButton),
+          new Padding(padding: new EdgeInsets.only(bottom: 40.0),
+              child: new Text(_countdownText.toString(),
+                style: new TextStyle(
+                  fontSize: 14.0))),
+        ],
+      ),
     );
   }
 }
